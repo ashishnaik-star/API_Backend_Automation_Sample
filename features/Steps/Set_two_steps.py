@@ -29,6 +29,7 @@ def step_impl(context, val):
                                                  auth=None)
     context.Json_val_comment = context.Posts_get_req_comment.json()
 
+
 @when(u': Post contains postid as one')
 def step_impl(context):
     assert "@" in context.Json_val_comment[0]['email']
@@ -36,9 +37,4 @@ def step_impl(context):
 
 @then(u': Check if the postid has value in it')
 def step_impl(context):
-   assert context.Posts_get_req_comment.status_code == 200
-
-
-
-
-
+    assert context.Posts_get_req_comment.status_code == 200
