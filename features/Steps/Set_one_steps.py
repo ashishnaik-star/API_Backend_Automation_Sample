@@ -14,8 +14,10 @@ def step_impl_post(context):
 
 @when(': Posts contain set of 100 posts')
 def step_impl_when_post(context):
-    for i in range(0, 100):
-        assert context.Json_val[i]['id'] == i + 1
+    assert context.Posts_get_req.status_code == 200
+    assert len(context.Json_val) == 100
+    for i, item in enumerate(context.Json_val):
+        assert item.get('id') == i + 1
 
 
 @then(': Check if the keyword "{val}" is present in Posts')
@@ -33,8 +35,10 @@ def step_impl_comment(context):
 
 @when(u': Comments contain set of 500 Comments')
 def step_impl_when_comment(context):
-    for i in range(0, 500):
-        assert context.Posts_get_comment_json[i]['id'] == i + 1
+    assert context.Posts_get_comment.status_code == 200
+    assert len(context.Posts_get_comment_json) == 500
+    for i, item in enumerate(context.Posts_get_comment_json):
+        assert item.get('id') == i + 1
 
 
 @then(u': Check if the keyword "{val}" is present in Comments')
@@ -52,9 +56,11 @@ def step_impl_given_album(context):
 
 @when(u': Comments contain set of 100 Albums with user id between 1 and 10')
 def step_impl_when_album(context):
+    assert context.Posts_get_albums.status_code == 200
     Range_list = list(range(1, 11))
-    for i in range(0, 100):
-        assert context.Posts_get_albums_json[i]['userId'] in Range_list
+    assert len(context.Posts_get_albums_json) == 100
+    for item in context.Posts_get_albums_json:
+        assert item.get('userId') in Range_list
 
 
 @then(u': Check if the keyword {val} is present in Albums')
@@ -72,8 +78,10 @@ def step_impl_given_photos(context):
 
 @when(u': Comments contain set of 5000 photos')
 def step_impl_when_photos(context):
-    for i in range(0, 500):
-        assert context.Posts_get_photos_json[i]['id'] == i + 1
+    assert context.Posts_get_photos.status_code == 200
+    assert len(context.Posts_get_photos_json) == 5000
+    for i, item in enumerate(context.Posts_get_photos_json):
+        assert item.get('id') == i + 1
 
 
 @then(u': Check if the keyword "{val}" is present in photos')
